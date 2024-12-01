@@ -1,0 +1,27 @@
+{
+   "pluginmetadataversion": 2,
+   "name": "ps4-loader",
+   "author": "janisslsm",
+   "type": [
+      "binaryview"
+   ],
+   "api": [
+      "python3"
+   ],
+   "description": "PS4 ELF/PRX loader plugin for Binary Ninja",
+   "license": {
+      "name": "GPL3"
+   },
+   "platforms": [
+      "Darwin",
+      "Windows",
+      "Linux"
+   ],
+   "installinstructions": {
+      "Darwin": "Place/Clone the plugin dir/repository into the users plugin folder. ~/Library/Application Support/Binary Ninja/plugins/",
+      "Windows": "Place/Clone the plugin dir/repository into the users plugin folder: %APPDATA%\\Binary Ninja\\plugins",
+      "Linux": "Place/Clone the plugin dir/repository into the users plugin folder: ~/.binaryninja/plugins/"
+   },
+   "version": "1.0.0",
+   "minimumbinaryninjaversion": 5902
+}
