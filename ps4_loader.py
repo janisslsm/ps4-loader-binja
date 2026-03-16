@@ -405,7 +405,9 @@ class SCESymbol:
         function = nids.get(symbol[:11], symbol)
         
         if self.VALUE > 0:
-            self.bv.add_function(self.VALUE).name = function
+            fn = self.bv.add_function(self.VALUE)
+            if fn is not None:
+                fn.name = function
             self.bv.set_comment_at(address, '%s | %s' % (function, self.info()))
 
 class Relocation:
