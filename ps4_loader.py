@@ -562,7 +562,7 @@ class Relocation:
             func = self.bv.get_function_at(real)
             func.type = Type.function(Type.void(), [], variable_arguments=True)
             func.name = function if demangled_name[0] is None else demangled_name[1][0]
-            self.bv.define_auto_symbol(Symbol(SymbolType.ImportAddressSymbol, self.OFFSET, '__imp_' + function))
+            self.bv.define_auto_symbol(Symbol(SymbolType.ImportAddressSymbol, self.OFFSET, function, namespace=library))
         except:
             pass
         
