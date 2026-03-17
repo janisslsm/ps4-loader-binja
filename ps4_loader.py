@@ -544,7 +544,7 @@ class Relocation:
         # Function Name (Offset) == Symbol Value + AddEnd (S + A)
         # Library Name  (Offset) == Symbol Value (S)
         real = self.bv.read_pointer(self.OFFSET)
-        
+        self.bv.create_user_function(real)
         # Hacky way to determine if this is the real function...
         real -= 0x6 if 'push' in self.bv.get_disassembly(real) else 0x0
         
@@ -556,13 +556,18 @@ class Relocation:
         function = str(nids.get(symbol[:11], symbol))
         
         try:
-            if not self.bv.get_function_at(real):
-                self.bv.create_user_function(real)
             demangled_name = demangle_generic(self.bv.arch, function)
             func = self.bv.get_function_at(real)
-            func.type = Type.function(Type.void(), [], variable_arguments=True)
+            func_type = Type.function(
+                Type.int(8, False),
+                [], 
+                variable_arguments=True
+            )
+            func.type = func_type
             func.name = function if demangled_name[0] is None else demangled_name[1][0]
-            self.bv.define_auto_symbol(Symbol(SymbolType.ImportAddressSymbol, self.OFFSET, function, namespace=library))
+            sym = Symbol(SymbolType.ImportAddressSymbol, self.OFFSET, '__imp_' + function, namespace=library)
+            self.bv.define_user_symbol(sym)
+            self.bv.define_user_data_var(self.OFFSET, func_type)
         except:
             pass
         
